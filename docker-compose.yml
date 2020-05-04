@@ -4,9 +4,6 @@ services:
     image: webapp:v1
     ports:
       - "3000:80"
-    volumes:
-      - /app/node_modules
-      - .:/app
     networks:
       - proxy
     labels:
