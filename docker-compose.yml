@@ -1,19 +1,21 @@
 version: '3'
 services:
   web:
-    build:
-      context: .
-      dockerfile: Dockerfile.dev
+    image: webapp:v1
     ports:
       - "3000:3000"
     volumes:
       - /app/node_modules
       - .:/app
-  tests:
-    build:
-      context: .
-      dockerfile: Dockerfile.dev
-    volumes:
-      - /app/node_modules
-      - .:/app
-    command: ["npm", "run", "test"]
+    networks:
+      - proxy
+    labels:
+      - "traefik.docker.network=proxy"
+      - "traefik.enable=true"
+      - "traefik.http.routers.web.rule=Host(`react.turkiyeoku.com`)"
+      - "traefik.http.routers.web.entrypoints=https"
+      - "traefik.http.routers.web.tls.certresolver=http"
+
+networks:
+  proxy:
+    external: true
