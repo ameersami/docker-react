@@ -3,7 +3,7 @@ services:
   web:
     image: webapp:v1
     ports:
-      - "3000:3000"
+      - "3000:80"
     volumes:
       - /app/node_modules
       - .:/app
